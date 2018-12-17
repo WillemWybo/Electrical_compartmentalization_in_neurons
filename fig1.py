@@ -47,6 +47,7 @@ print net
 ## create and run the NEURON model #############################################
 print '> Simulating NEURON model'
 sim_tree = sov_tree.__copy__(new_tree=neurm.NeuronSimTree())
+sim_tree.treetype = 'computational'
 sim_tree.initModel(dt=dt, v_eq=v_eq, factor_lambda=10.)
 # add synapses
 sim_tree.addDoubleExpSynapse(locs[1], .2, 3., 0.)

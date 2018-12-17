@@ -43,27 +43,13 @@ net_loc_inds = sov_tree.getNearestLocinds(locs, name='NET_eval')
 locs = [sov_tree.getLocs('NET_eval')[ind] for ind in net_loc_inds]
 # prune the full NET
 net = net_full.getReducedTree(net_loc_inds, indexing='locs')
-print net
 ################################################################################
 
 
-
-
-# sim_tree = sov_tree.__copy__(new_tree=neurm.NeuronSimTree())
-# sim_tree.treetype = 'computational'
-# sim_tree.initModel(dt=dt, v_eq=v_eq, factor_lambda=5.)
-# print 'z_sim'
-# print sim_tree.calcImpedanceMatrix(locs)
+################################################################################
 greens_tree = getGreensTree(morph_name, physiology_type='ActiveSoma')
-print 'z_sov'
-print sov_tree.calcImpedanceMatrix(locs)
-print 'z_net'
-print net.calcImpedanceMatrix()
-
 z_mat = greens_tree.calcImpedanceMatrix(locs).real[0]
-print 'z_gf'
-print z_mat
-##
+
 z_bar_0123 = np.mean(z_mat[0,1:])
 net[0].z_kernel.c *= z_bar_0123 / net[0].z_kernel.k_bar
 
@@ -81,10 +67,7 @@ net[4].z_kernel.c *= z_bar_1 / net[4].z_kernel.k_bar
 
 z_bar_3 = z_mat[3,3] - z_bar_123 - z_bar_0123
 net[5].z_kernel.c *= z_bar_3 / net[5].z_kernel.k_bar
-
-print net
-print net.calcImpedanceMatrix()
-##
+################################################################################
 
 
 reslist_net, reslist_neuron = [], []
